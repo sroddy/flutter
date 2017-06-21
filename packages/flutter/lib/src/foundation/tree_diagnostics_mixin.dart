@@ -7,14 +7,22 @@ import 'package:meta/meta.dart';
 import 'print.dart';
 
 /// Returns a 5 character long hexadecimal string generated from
-/// Object.hashCode's 20 least-significant bits.
+/// the 20 least-significant bits of [Object.hashCode].
+///
+/// See also:
+/// * [describeIdentity] which uses this method as part of a short description
+///   of the identity of an object.
 String shortHash(Object object) {
   return object.hashCode.toUnsigned(20).toRadixString(16).padLeft(5, '0');
 }
 
-/// Returns a summary of the runtime type and hash code of `object`.
-String describeIdentity(Object object) =>
-    '${object.runtimeType}#${shortHash(object)}';
+/// Returns a summary of [Object.runtimeType and [Object.hashCode].
+///
+/// [[shortHash]] is used to provide a fixed length description of the
+/// hashCode so that the length of the return value of this method is stable.
+String describeIdentity(Object object) {
+  return '${object.runtimeType}#${shortHash(object)}';
+}
 
 /// A mixin that helps dump string representations of trees.
 abstract class TreeDiagnosticsMixin {
