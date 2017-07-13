@@ -173,7 +173,6 @@ Once you've gotten an LGTM from a project maintainer, submit your changes to the
 * Wait for one of the project maintainers to submit it for you.
 * Click the green "Merge pull request" button on the GitHub UI of your pull
   request (requires commit access)
-* `git push upstream name_of_your_branch:master` (requires commit access)
 
 You must complete the
 [Contributor License Agreement](https://cla.developers.google.com/clas).
