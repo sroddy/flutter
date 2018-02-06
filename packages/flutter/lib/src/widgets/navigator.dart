@@ -2484,6 +2484,33 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin {
     return newRoute.popped;
   }
 
+  /// Inserts the `newRoute` below the given `anchorRoute`.
+  ///
+  /// The route prior to the added route, if any, is notified (see
+  /// [Route.didChangeNext]). The route above the added route is also notified
+  /// (see [Route.didChangePrevious]). The navigator observer is not notified.
+  /// Returns a [Future] that completes to the `result` value passed to [pop]
+  /// when the inserted route is popped off the navigator.
+  Future<T> insertBelow<T>(Route<dynamic> anchorRoute, Route<T> newRoute) {
+    assert(!_debugLocked);
+    assert(() { _debugLocked = true; return true; }());
+    assert(anchorRoute._navigator == this);
+    final int index = _history.indexWhere((_RouteEntry e) => e.route == anchorRoute);
+    assert(index >= 0);
+    assert(newRoute != null);
+    assert(newRoute._navigator == null);
+    assert(newRoute.overlayEntries.isEmpty);
+    _history.insert(index, _RouteEntry(newRoute, initialState: _RouteLifecycle.add));
+    _flushHistoryUpdates();
+
+    assert(() {
+      _debugLocked = false;
+      return true;
+    }());
+    _afterNavigation(newRoute);
+    return newRoute.popped;
+  }
+
   /// Replaces a route on the navigator with a new route.
   ///
   /// {@macro flutter.widgets.navigator.replace}
