@@ -278,7 +278,7 @@ class OverlayState extends State<Overlay> with TickerProviderStateMixin {
       return _entries.indexOf(below);
     if (above != null)
       return _entries.indexOf(above) + 1;
-    return _entries.length;
+    return 0;
   }
 
   /// Insert the given entry into the overlay.
