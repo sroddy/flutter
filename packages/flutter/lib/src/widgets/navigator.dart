@@ -1550,7 +1550,7 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin {
   /// ```
   /// {@end-tool}
   @optionalTypeArgs
-  Future<T> push<T extends Object>(Route<T> route) {
+  Future<T> push<T extends Object>(Route<T> route, { VoidCallback onPushed }) {
     assert(!_debugLocked);
     assert(() { _debugLocked = true; return true; }());
     assert(route != null);
@@ -1559,7 +1559,10 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin {
     route._navigator = this;
     route.install(_currentOverlayEntry);
     _history.add(route);
-    route.didPush();
+    route.didPush().whenCompleteOrCancel(() {
+      if (onPushed != null)
+        onPushed();
+    });
     route.didChangeNext(null);
     if (oldRoute != null) {
       oldRoute.didChangeNext(route);
