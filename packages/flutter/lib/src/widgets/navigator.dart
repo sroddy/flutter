@@ -1830,6 +1830,7 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin {
         : null;
       newRoute.install(entryPoint);
       _history.insert(index, newRoute);
+      newRoute.didReplace(null);
       newRoute.didChangePrevious(previousRoute);
       newRoute.didChangeNext(anchorRoute);
       if (previousRoute != null)
