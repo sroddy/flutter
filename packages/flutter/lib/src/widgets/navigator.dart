@@ -1696,11 +1696,10 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin {
       newRoute.install(entryPoint);
       _history.insert(index, newRoute);
       newRoute.didReplace(null);
-      newRoute.didChangePrevious(previousRoute);
-      newRoute.didChangeNext(anchorRoute);
       if (previousRoute != null)
         previousRoute.didChangeNext(newRoute);
       anchorRoute.didChangePrevious(newRoute);
+      newRoute.didChangeNext(anchorRoute);
     });
     assert(() { _debugLocked = false; return true; }());
     return newRoute.popped;
