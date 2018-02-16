@@ -1538,7 +1538,7 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin {
     route.install(_currentOverlayEntry);
     _history.add(route);
     route.didPush().whenCompleteOrCancel(() {
-      if (onPushed != null)
+      if (mounted && onPushed != null)
         onPushed();
     });
     route.didChangeNext(null);
@@ -1568,7 +1568,7 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin {
   /// }
   /// ```
   @optionalTypeArgs
-  Future<T> pushReplacement<T extends Object, TO extends Object>(Route<T> newRoute, { TO result }) {
+  Future<T> pushReplacement<T extends Object, TO extends Object>(Route<T> newRoute, { TO result, VoidCallback onPushed }) {
     assert(!_debugLocked);
     assert(() { _debugLocked = true; return true; }());
     final Route<dynamic> oldRoute = _history.last;
@@ -1589,6 +1589,8 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin {
         oldRoute
           ..didComplete(result ?? oldRoute.currentResult)
           ..dispose();
+        if (onPushed != null)
+          onPushed();
       }
     });
     newRoute.didChangeNext(null);
