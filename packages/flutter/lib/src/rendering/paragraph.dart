@@ -177,6 +177,24 @@ class RenderParagraph extends RenderBox {
   void _layoutText({ double minWidth: 0.0, double maxWidth: double.INFINITY }) {
     final bool widthMatters = softWrap || overflow == TextOverflow.ellipsis;
     _textPainter.layout(minWidth: minWidth, maxWidth: widthMatters ? maxWidth : double.INFINITY);
+
+    final originalHeight = _textPainter.height;
+    double max = (minWidth + maxWidth) / 2.0;
+
+    bool finished = max <= _textPainter.minIntrinsicWidth;
+    while (softWrap && !finished) {
+      _textPainter.layout(minWidth: minWidth, maxWidth: max);
+
+      if (_textPainter.height > originalHeight && max < maxWidth - 1) {
+        minWidth = max;
+        max = (max + maxWidth) / 2.0;
+      } else if (_textPainter.height == originalHeight && max > minWidth + 1) {
+        maxWidth = max;
+        max = (max + minWidth) / 2.0;
+      } else {
+        finished = true;
+      }
+    }
   }
 
   void _layoutTextWithConstraints(BoxConstraints constraints) {
