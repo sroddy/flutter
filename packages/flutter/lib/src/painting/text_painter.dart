@@ -382,7 +382,7 @@ class TextPainter {
         0.0,
         (prev, elem) => math.max(prev, elem),
       );
-      if (maxBoxWidth > 0.0 && maxBoxWidth != width) {
+      if (maxBoxWidth > 0.0 && maxBoxWidth >= minWidth && maxBoxWidth != width) {
         _paragraph.layout(new ui.ParagraphConstraints(width: maxBoxWidth));
       }
     }
