@@ -97,7 +97,7 @@ class BackButton extends StatelessWidget {
     return IconButton(
       icon: const BackButtonIcon(),
       color: color,
-      tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+      tooltip: MaterialLocalizations.of(context)?.backButtonTooltip ?? "",
       onPressed: () {
         if (onPressed != null) {
           onPressed();
