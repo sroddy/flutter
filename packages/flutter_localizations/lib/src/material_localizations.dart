@@ -133,7 +133,7 @@ class GlobalMaterialLocalizations implements MaterialLocalizations {
   intl.DateFormat _yearMonthFormat;
 
   static String _computeLocaleName(Locale locale) {
-    final String localeName = locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
+    final String localeName = (locale.countryCode == null || locale.countryCode.isEmpty) ? locale.languageCode : locale.toString();
     return intl.Intl.canonicalizedLocale(localeName);
   }
 
