@@ -83,7 +83,7 @@ class ModalBarrier extends StatelessWidget {
         child: new GestureDetector(
           onTapDown: (TapDownDetails details) {
             if (dismissible)
-              Navigator.pop(context);
+              Navigator.maybePop(context);
           },
           behavior: HitTestBehavior.opaque,
           child: new Semantics(
