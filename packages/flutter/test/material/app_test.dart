@@ -834,6 +834,34 @@ void main() {
     expect(find.text('regular page one'), findsNothing);
     expect(find.text('regular page two'), findsNothing);
   });
+<<<<<<< HEAD
+=======
+
+  testWidgets('MaterialApp does create HeroController with the MaterialRectArcTween', (WidgetTester tester) async {
+    final HeroController controller = MaterialApp.createMaterialHeroController();
+    final Tween<Rect> tween = controller.createRectTween(
+      const Rect.fromLTRB(0.0, 0.0, 10.0, 10.0),
+      const Rect.fromLTRB(0.0, 0.0, 20.0, 20.0)
+    );
+    expect(tween, isA<MaterialRectArcTween>());
+  });
+
+  testWidgets('MaterialApp.navigatorKey can be updated', (WidgetTester tester) async {
+    final GlobalKey<NavigatorState> key1 = GlobalKey<NavigatorState>();
+    await tester.pumpWidget(MaterialApp(
+      navigatorKey: key1,
+      home: const Placeholder(),
+    ));
+    expect(key1.currentState, isA<NavigatorState>());
+    final GlobalKey<NavigatorState> key2 = GlobalKey<NavigatorState>();
+    await tester.pumpWidget(MaterialApp(
+      navigatorKey: key2,
+      home: const Placeholder(),
+    ));
+    expect(key2.currentState, isA<NavigatorState>());
+    expect(key1.currentState, isNull);
+  });
+>>>>>>> 734782f... clean up hero controller scope (#60655)
 }
 
 class MockAccessibilityFeature implements AccessibilityFeatures {

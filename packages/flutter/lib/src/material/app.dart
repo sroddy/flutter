@@ -575,18 +575,6 @@ class _MaterialAppState extends State<MaterialApp> {
     _heroController = HeroController(createRectTween: _createRectTween);
   }
 
-  @override
-  void didUpdateWidget(MaterialApp oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.navigatorKey != oldWidget.navigatorKey) {
-      // If the Navigator changes, we have to create a new observer, because the
-      // old Navigator won't be disposed (and thus won't unregister with its
-      // observers) until after the new one has been created (because the
-      // Navigator has a GlobalKey).
-      _heroController = HeroController(createRectTween: _createRectTween);
-    }
-  }
-
   RectTween _createRectTween(Rect begin, Rect end) {
     return MaterialRectArcTween(begin: begin, end: end);
   }
